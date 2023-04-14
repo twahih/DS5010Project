@@ -20,5 +20,30 @@ timeframe = tradeapi.rest.TimeFrame.Day  # 1 day
 start_date = '2022-01-01'
 end_date = '2022-12-31'
 
+
+symbol = 'AAPL'
+timeframe = tradeapi.rest.TimeFrame.Day  # 1 day
+
+# Define the start and end dates for the historical data
+start_date = '2022-01-01'
+end_date = '2022-12-31'
+
 # Retrieve the historical data for the symbol and timeframe
 bars = api.get_bars(symbol, timeframe, start=start_date, end=end_date, adjustment='raw')
+
+# Convert the response to a Pandas DataFrame
+data = pd.DataFrame([{
+    'timestamp': bar.t,
+    'open': bar.o,
+    'high': bar.h,
+    'low': bar.l,
+    'close': bar.c,
+    'volume': bar.v
+} for bar in bars])
+
+# Set the timestamp as the index
+data.set_index('timestamp', inplace=True)
+
+# Set the timestamp as the index
+data.set_index('timestamp', inplace=True)
+
