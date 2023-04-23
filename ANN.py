@@ -1,6 +1,3 @@
-
-# OPTION 3 is the best so far 
-
 import numpy as np
 
 class NeuralNetwork:
@@ -72,7 +69,6 @@ class NeuralNetwork:
                 loss = np.mean(np.square(output - y))
                 print(f"Epoch {epoch}, loss: {loss}")
 
-    def predict(self, X):
-        return self.forward(X)
-
-
+    def predict(self, X, threshold=0.5):
+        output = self.forward(X)
+        return np.where(output > threshold, 1, 0)

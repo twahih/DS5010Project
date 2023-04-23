@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 import alpaca_trade_api as tradeapi
-
-from sklearn.model_selection import train_test_split
+from config import *
+import os
+import time
 
 # Set up API credentials
 API_KEY = 'PKL6FLMQP9AR37P9DG3M'
@@ -39,29 +40,8 @@ data = pd.DataFrame([{
     'volume': bar.v
 } for bar in bars])
 
+# Set the timestamp as the index
+data.set_index('timestamp', inplace=True)
 
-data.reset_index()
-data = data.drop('timestamp', axis=1)
-data.head()
-data['close_diff'] = data['close'].diff()
-
-# Create a new column 'indicator' with 1 if the difference is positive, and 0 if it is negative or NaN
-data['indicator'] = (data['close_diff'] > 0).astype(int)
-
-# Drop rows with NaN values
-data = data.dropna()
-
-# Reset the index after dropping rows
-df = data.reset_index(drop=True)
-
-# Print the DataFrame with the NaN row removed
-print(data.head())
-
-
-y = data['indicator']
-X=data.drop(['indicator'], axis = 1)
-
-print(X,y)
-#X_train, X_test, y_train, y_test = train_test_split(X, y , test_size=0.1)
-
-
+# Set the timestamp as the index
+data.set_index('timestamp', inplace=True)
